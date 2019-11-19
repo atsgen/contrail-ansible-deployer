@@ -1,17 +1,17 @@
 version: '2'
 services:
   node-init:
-    image: "{{ container_registry }}/contrail-node-init:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-node-init:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_vrouter.env
     environment:
-      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/contrail-status:{{ contrail_version_tag }}"
+      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/tungsten-status:{{ contrail_version_tag }}"
     privileged: true
     pid: host
     network_mode: "host"
     volumes:
       {{ common_volumes | to_yaml | indent(width=6) }}
   nodemgr:
-    image: "{{ container_registry }}/contrail-nodemgr:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-nodemgr:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_vrouter.env
     environment:
       - NODE_TYPE=vrouter
@@ -29,7 +29,7 @@ services:
         max-size: "{{ compute_log_max_size }}"
         max-file: "{{ compute_log_max_file }}"
   vrouter-kernel-init-dpdk:
-    image: "{{ container_registry }}/contrail-vrouter-kernel-init-dpdk:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-vrouter-kernel-init-dpdk:{{ contrail_version_tag }}"
     network_mode: host
     privileged: true
     env_file: /etc/contrail/common_vrouter.env
@@ -47,7 +47,7 @@ services:
       - node-init
 {% if mellanox %}
   vrouter-plugin-mellanox-init:
-    image: "{{ container_registry }}/contrail-vrouter-plugin-mellanox-init-{{plugin_os}}:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-vrouter-plugin-mellanox-init-{{plugin_os}}:{{ contrail_version_tag }}"
     network_mode: host
     privileged: true
     env_file: /etc/contrail/common_vrouter.env
@@ -67,7 +67,7 @@ services:
       - node-init
 {% endif %}
   vrouter-agent-dpdk:
-    image: "{{ container_registry }}/contrail-vrouter-agent-dpdk:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-vrouter-agent-dpdk:{{ contrail_version_tag }}"
     network_mode: host
     privileged: true
     env_file: /etc/contrail/common_vrouter.env
@@ -95,7 +95,7 @@ services:
         max-size: "{{ compute_log_max_size }}"
         max-file: "{{ compute_log_max_file }}"
   vrouter-agent:
-    image: "{{ container_registry }}/contrail-vrouter-agent:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-vrouter-agent:{{ contrail_version_tag }}"
     network_mode: host
     privileged: true
     pid: host

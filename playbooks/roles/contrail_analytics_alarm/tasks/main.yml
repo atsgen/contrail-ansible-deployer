@@ -18,10 +18,10 @@
 - name: update alarm, external-kafka image
   shell: "docker pull {{ container_registry }}/{{ item }}:{{ contrail_version_tag }}"
   with_items:
-    - contrail-node-init
-    - contrail-nodemgr
-    - contrail-analytics-alarm-gen
-    - contrail-external-kafka
+    - tungsten-node-init
+    - tungsten-nodemgr
+    - tungsten-analytics-alarm-gen
+    - tungsten-external-kafka
 
 - name: create contrail analytics_alarm docker-compose file
   template:

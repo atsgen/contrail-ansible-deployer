@@ -42,8 +42,8 @@
 - name: update image
   shell: "docker pull {{ container_registry }}/{{ item }}:{{ contrail_version_tag }}"
   with_items:
-    - contrail-controller-webui-web
-    - contrail-controller-webui-job
+    - tungsten-controller-webui-web
+    - tungsten-controller-webui-job
   when: contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
 
 - name: "create contrail webui compose file"

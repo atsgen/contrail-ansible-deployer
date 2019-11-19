@@ -18,10 +18,10 @@
 - name: update contrail analytics database image
   shell: "docker pull {{ container_registry }}/{{ item }}:{{ contrail_version_tag }}"
   with_items:
-    - contrail-node-init
-    - contrail-nodemgr
-    - contrail-analytics-query-engine
-    - contrail-external-cassandra
+    - tungsten-node-init
+    - tungsten-nodemgr
+    - tungsten-analytics-query-engine
+    - tungsten-external-cassandra
   when: contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
 
 - name: create contrail analytics database compose file

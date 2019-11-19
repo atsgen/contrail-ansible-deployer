@@ -1,7 +1,7 @@
 version: '2'
 services:
   vcenter-manager:
-    image: "{{ container_registry }}/contrail-vcenter-manager:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-vcenter-manager:{{ contrail_version_tag }}"
     network_mode: "host"
     env_file: /etc/contrail/common_vcmanager.env
     volumes:

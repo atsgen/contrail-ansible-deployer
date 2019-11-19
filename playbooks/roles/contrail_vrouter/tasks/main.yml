@@ -61,21 +61,21 @@
 
 - name: set vrouter kernel init image name
   set_fact:
-    vrouter_kernel_init_img_name: contrail-vrouter-kernel-build-init
+    vrouter_kernel_init_img_name: tungsten-vrouter-kernel-build-init
   when: ansible_os_family == 'Debian'
 
 - name: set vrouter kernel init image name
   set_fact:
-    vrouter_kernel_init_img_name: contrail-vrouter-kernel-init
+    vrouter_kernel_init_img_name: tungsten-vrouter-kernel-init
   when: ansible_os_family == 'RedHat'
 
 - name: update image
   shell: "docker pull {{ container_registry }}/{{ item }}:{{ contrail_version_tag }}"
   with_items:
-    - contrail-node-init
-    - contrail-nodemgr
+    - tungsten-node-init
+    - tungsten-nodemgr
     - "{{ vrouter_kernel_init_img_name }}"
-    - contrail-vrouter-agent
+    - tungsten-vrouter-agent
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].vrouter.AGENT_MODE is undefined or roles[instance_name].vrouter.AGENT_MODE != 'dpdk'
@@ -94,11 +94,11 @@
 - name: update image for dpdk vrouter
   shell: "docker pull {{ container_registry }}/{{ item }}:{{ contrail_version_tag }}"
   with_items:
-    - contrail-node-init
-    - contrail-nodemgr
-    - contrail-vrouter-kernel-init-dpdk
-    - contrail-vrouter-agent-dpdk
-    - contrail-vrouter-agent
+    - tungsten-node-init
+    - tungsten-nodemgr
+    - tungsten-vrouter-kernel-init-dpdk
+    - tungsten-vrouter-agent-dpdk
+    - tungsten-vrouter-agent
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].vrouter.AGENT_MODE is defined

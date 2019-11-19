@@ -1,7 +1,7 @@
 version: '2'
 services:
   vcenter-plugin:
-    image: "{{ container_registry }}/contrail-vcenter-plugin:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-vcenter-plugin:{{ contrail_version_tag }}"
     network_mode: "host"
     env_file: /etc/contrail/common_vcplugin.env
     environment:

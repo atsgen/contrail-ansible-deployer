@@ -3,17 +3,17 @@ volumes:
   analytics_cassandra:
 services:
   node-init:
-    image: "{{ container_registry }}/contrail-node-init:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-node-init:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common.env
     environment:
-      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/contrail-status:{{ contrail_version_tag }}"
+      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/tungsten-status:{{ contrail_version_tag }}"
     privileged: true
     pid: host
     network_mode: "host"
     volumes:
       {{ common_volumes | to_yaml | indent(width=6) }}
   nodemgr:
-    image: "{{ container_registry }}/contrail-nodemgr:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-nodemgr:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common.env
     environment:
       - NODE_TYPE=database
@@ -35,7 +35,7 @@ services:
         max-size: "{{ analytics_db_log_max_size }}"
         max-file: "{{ analytics_db_log_max_file }}"
   query-engine:
-    image: "{{ container_registry }}/contrail-analytics-query-engine:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-analytics-query-engine:{{ contrail_version_tag }}"
     network_mode: "host"
     env_file: /etc/contrail/common.env
     volumes_from:
@@ -51,7 +51,7 @@ services:
         max-size: "{{ analytics_db_log_max_size }}"
         max-file: "{{ analytics_db_log_max_file }}"
   cassandra:
-    image: "{{ container_registry }}/contrail-external-cassandra:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/tungsten-external-cassandra:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common.env
     environment:
       - CASSANDRA_SEEDS={{ cassandra_seeds }}

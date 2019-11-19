@@ -42,10 +42,10 @@
 - name: update contrail analytics images
   shell: "docker pull {{ container_registry }}/{{ item }}:{{ contrail_version_tag }}"
   with_items:
-    - contrail-node-init
-    - contrail-nodemgr
-    - contrail-analytics-api
-    - contrail-analytics-collector
+    - tungsten-node-init
+    - tungsten-nodemgr
+    - tungsten-analytics-api
+    - tungsten-analytics-collector
   when: contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
 
 - name: create contrail analytics file
