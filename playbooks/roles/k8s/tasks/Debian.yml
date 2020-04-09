@@ -11,3 +11,22 @@
     repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
     state: present
   when: k8s_package_version is defined
+
+- name: get kubernetes-cni version
+  shell: |
+    str=$(apt-cache show pkg kubelet={{ k8s_version }}-00 | grep Depends)
+    str=${str#*kubernetes-cni \(\= }
+    echo $str | awk '{split($0, a, ")"); print a[1]}'
+  register: kubernetes_cni_ver_output
+  when:
+    - instance_data.roles is defined
+    - instance_data.roles.k8s_master is defined or instance_data.roles.k8s_node is defined
+
+- name: hack to handle kubernetes-cni dependency issue
+  package:
+    name: "kubernetes-cni={{ kubernetes_cni_ver_output.stdout }}-00"
+    state: present
+  when: k8s_package_version is defined
+  register: res
+  retries: 5
+  until: res is success
